@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+<head>
+{% block styles %}
+	<link rel="stylesheet" href="{% get_static_prefix %}css/base.css" type="text/css" />
+{% endblock %}
+<title>{% block title %}Паутина{% endblock %}</title>
+</head>
+<body>
+{% block links %}
+<div class="links category">
+<a href="/store_stats">Статистика склада</a>
+</div>
+{% endblock %}
+<div class="content category">
+{% block content%}{% endblock %}
+</div>
+</body>
+</html>

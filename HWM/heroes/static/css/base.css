@@ -1,0 +1,14 @@
+.category{
+	display: inline-block;
+	border: solid 1px red;
+}
+
+.links {
+	align: left;
+	width: 15%;
+}
+
+.content {
+	text-align: center;
+	width: 65%;
+}

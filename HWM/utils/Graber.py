@@ -7,20 +7,22 @@ from datetime import datetime
 def str_to_date(text):
     return datetime.strptime(text,'%d-%m-%y %H:%M')
 
-def find_substr(text,beg,end):
-    try:
+def find_substr(text,beg,end, left):
+    if left:
         index = text.find(beg)
-        s =''
-        index +=1
-        while True:
-            if(text[index]==end):
-                break
-            else:
-                s+=text[index]
-                index+=1
-        return s
-    except IndexError:
-        print text
+    else:
+        index = text.rfind(beg)
+    if index==-1:
+        return ''
+    s =''
+    index +=1
+    while index < len(text):
+        if(text[index]==end):
+            break
+        else:
+            s+=text[index]
+            index+=1
+    return s
 
 def find_number(text):
     i = 0
@@ -64,9 +66,8 @@ class Graber(Spider):
                 self.curr_date = date
             if(date < self.limit_date.date):
                 new_page=False
-                date_value = DateValue()
-                date_value.date = date
-                date_value.save()
+                self.limit_date.date = self.curr_date
+                self.limit_date.save()
                 break
             index = log.rfind('<!--')
             id = log[index+4:-3]
@@ -78,13 +79,13 @@ class Graber(Spider):
                 artifact = Artifact.objects.get(pk=id)
                 if(artifact.last_date < date):
                     artifact.last_date = date
-                    artifact.strength = find_substr(description,'[',']')
+                    artifact.strength = find_substr(description,'[',']',False)
             except Artifact.DoesNotExist:
                 artifact = Artifact()
                 artifact.id = id
-                artifact.name = find_substr(description,"'","'")
+                artifact.name = find_substr(description,"'","'",True)
                 artifact.last_date = date
-                artifact.strength = find_substr(description,'[',']')
+                artifact.strength = find_substr(description,'[',']',False)
             artifact.save()
             logObject = Log()
             logObject.artifact=artifact
