@@ -1,3 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title%}Добро пожаловать на сайт статистики клана Паутина{% endblock %}
-{% block content %}Сдесь может быть Ваша реклама{% endblock %}
+{% block content %}
+<div id="indexDiv">
+	<h2>Вас приветствует клан Паутина!</h2>
+	<a href="http://www.heroeswm.ru/clan_info.php?id=1180"><img src="{% get_static_prefix %}img/em.jpg"/></a>
+</div>
+{% endblock %}

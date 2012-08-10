@@ -5,11 +5,10 @@ from django.conf.urls.defaults import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^collect$', 'heroes.views.collect_stats'),
     url(r'^$', 'heroes.views.index'),
-    # url(r'^$', 'HWM.views.home', name='home'),
-    # url(r'^HWM/', include('HWM.foo.urls')),
-
+    url(r'^store_stats/$', 'heroes.views.stats'),
+    url(r'^store/art_info$', 'heroes.views.art_info'),
+    
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}Статистика склада{% endblock %}
+{% block content %}
+Категории:
+<ul style="margin-top: 0px">
+	<li>По состоянию:
+		<ul class="categories">
+			<li><a href="/store_stats?cat=broken">Сломанные</a></li>
+			<li><a href="/store_stats?cat=notbroken">Целые</a></li>
+		</ul>
+	</li>
+	<li>По алфавиту:
+		<ul class="categories">
+			{% for alpha in categories %}
+				<li><a href="/store_stats?cat={{ alpha }}">{{ alpha }}</a></li>
+			{% endfor %}
+		</ul>
+	</li>
+</ul>
+<div id="artsDivId">
+	{% if arts != None %}
+	<h3>Артефакты</h3>
+	{% for art in arts %}
+		<a class="arts" href="/store/art_info?id={{ art.id }}">{{ art.name }}[{{ art.strength }}]</a><br/>
+	{% endfor %}
+	{% endif %}
+	{% if artifact != None%}
+	<h3>Информация об артефакте</h3>
+	<h4>{{ artifact.name }}[{{ artifact.strength }}]</h4>
+	{% autoescape off %}
+		{% for log in logs%}
+			<div>{{log.date|date:"d-m-Y H:i"}}: {{log.description}}</div>
+		{% endfor %}
+	{% endautoescape %}
+	{% endif%}
+</div>
+{% endblock %}

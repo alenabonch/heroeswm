@@ -38,7 +38,13 @@ class Graber(Spider):
     
     def task_initial(self, grab, task):
         self.curr_date = None
-        self.limit_date = DateValue.objects.get(pk=1)
+        try:
+            self.limit_date = DateValue.objects.get(pk=1)
+        except DateValue.DoesNotExist:
+            self.limit_date = DateValue()
+            self.limit_date.id=1
+            self.limit_date.date = datetime(2012,4,12,18,0,0)
+            self.limit_date.save()
         grab.set_input('login','Stats_Graber')
         grab.set_input('lreseted','1')
         grab.set_input('pass','Spider123')
